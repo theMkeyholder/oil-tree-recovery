@@ -1,15 +1,3 @@
-var _____WB$wombat$assign$function_____ = function(name) {return (self._wb_wombat && self._wb_wombat.local_init && self._wb_wombat.local_init(name)) || self[name]; };
-if (!self.__WB_pmw) { self.__WB_pmw = function(obj) { this.__WB_source = obj; return this; } }
-{
-  let window = _____WB$wombat$assign$function_____("window");
-  let self = _____WB$wombat$assign$function_____("self");
-  let document = _____WB$wombat$assign$function_____("document");
-  let location = _____WB$wombat$assign$function_____("location");
-  let top = _____WB$wombat$assign$function_____("top");
-  let parent = _____WB$wombat$assign$function_____("parent");
-  let frames = _____WB$wombat$assign$function_____("frames");
-  let opener = _____WB$wombat$assign$function_____("opener");
-
 var canvas;
 var ctx;
 
@@ -33,18 +21,7 @@ function resizeCanvas() {
 		drawTree();
 }
 
-var colors = {
-	default: {
-		1: "#ffffff",
-		2: "#bfbfbf",
-		3: "#7f7f7f",
-	},
-	aqua: {
-		1: "#bfdfff",
-		2: "#8fa7bf",
-		3: "#5f6f7f",
-	},
-}
+
 var colors_theme
 
 function drawTree() {
@@ -57,24 +34,34 @@ function drawTree() {
 					drawTreeBranch(layer, tmp[layer].branches[branch])
 				}
 		}
-		for(id in layers[layer].upgrades) {
-			if (tmp[layer].upgrades[id].branches) {
-				for (branch in tmp[layer].upgrades[id].branches)
-				{
-					drawTreeBranch(id, tmp[layer].upgrades[id].branches[branch], "upgrade-" + layer + "-")
-				}
+		drawComponentBranches(layer, tmp[layer].upgrades, "upgrade-")
+		drawComponentBranches(layer, tmp[layer].buyables, "buyable-")
+		drawComponentBranches(layer, tmp[layer].clickables, "clickable-")
 
+	}
+}
+
+function drawComponentBranches(layer, data, prefix) {
+	for(id in data) {
+		if (data[id].branches) {
+			for (branch in data[id].branches)
+			{
+				drawTreeBranch(id, data[id].branches[branch], prefix + layer + "-")
 			}
+
 		}
 	}
+
 }
 
 function drawTreeBranch(num1, data, prefix) { // taken from Antimatter Dimensions & adjusted slightly
 	let num2 = data
 	let color_id = 1
+	let width = 15
 	if (Array.isArray(data)){
 		num2 = data[0]
 		color_id = data[1]
+		width = data[2] || width
 	}
 
 	if(typeof(color_id) == "number")
@@ -92,7 +79,7 @@ function drawTreeBranch(num1, data, prefix) { // taken from Antimatter Dimension
     let y1 = start.top + (start.height / 2) + document.body.scrollTop;
     let x2 = end.left + (end.width / 2) + document.body.scrollLeft;
     let y2 = end.top + (end.height / 2) + document.body.scrollTop;
-    ctx.lineWidth = 15;
+    ctx.lineWidth = width;
     ctx.beginPath();
     ctx.strokeStyle = color_id
     ctx.moveTo(x1, y1);
