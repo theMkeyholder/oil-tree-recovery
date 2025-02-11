@@ -1,15 +1,3 @@
-var _____WB$wombat$assign$function_____ = function(name) {return (self._wb_wombat && self._wb_wombat.local_init && self._wb_wombat.local_init(name)) || self[name]; };
-if (!self.__WB_pmw) { self.__WB_pmw = function(obj) { this.__WB_source = obj; return this; } }
-{
-  let window = _____WB$wombat$assign$function_____("window");
-  let self = _____WB$wombat$assign$function_____("self");
-  let document = _____WB$wombat$assign$function_____("document");
-  let location = _____WB$wombat$assign$function_____("location");
-  let top = _____WB$wombat$assign$function_____("top");
-  let parent = _____WB$wombat$assign$function_____("parent");
-  let frames = _____WB$wombat$assign$function_____("frames");
-  let opener = _____WB$wombat$assign$function_____("opener");
-
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -1832,8 +1820,8 @@ if (!self.__WB_pmw) { self.__WB_pmw = function(obj) { this.__WB_source = obj; re
       var a = this;
       var b = decimal;
 
-      //special case: if a is 0, then return 0
-      if (a.sign === 0) { return a; }
+      //special case: if a is 0, then return 0 (UNLESS b is 0, then return 1)
+      if (a.sign === 0) { return b.eq(0) ? FC_NN(1, 0, 1) : a; }
       //special case: if a is 1, then return 1
       if (a.sign === 1 && a.layer === 0 && a.mag === 1) { return a; }
       //special case: if b is 0, then return 1
@@ -1843,7 +1831,7 @@ if (!self.__WB_pmw) { self.__WB_pmw = function(obj) { this.__WB_source = obj; re
       
       var result = (a.absLog10().mul(b)).pow10();
 
-      if (this.sign === -1 && b.toNumber() % 2 === 1) {
+      if (this.sign === -1 && Math.abs(b.toNumber() % 2) === 1) {
         return result.neg();
       }
 
