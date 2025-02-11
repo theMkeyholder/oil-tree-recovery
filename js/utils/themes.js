@@ -5,6 +5,28 @@ const themes = {
 const theme_names = {
 	aqua: "Aqua"
 };
+var colors = {
+	default: {
+		1: "#ffffff",//Branch color 1
+		2: "#bfbfbf",//Branch color 2
+		3: "#7f7f7f",//Branch color 3
+		color: "#dfdfdf",
+		points: "#ffffff",
+		locked: "#bf8f8f",
+		background: "#0f0f0f",
+		background_tooltip: "rgba(0, 0, 0, 0.75)",
+	},
+	aqua: {
+		1: "#bfdfff",
+		2: "#8fa7bf",
+		3: "#5f6f7f",
+		color: "#bfdfff",
+		points: "#dfefff",
+		locked: "#c4a7b3",
+		background: "#001f3f",
+		background_tooltip: "rgba(0, 15, 31, 0.75)",
+	},
+}
 function changeTheme() {
 	let aqua = options.theme == "aqua";
 	colors_theme = colors[options.theme || "default"];
