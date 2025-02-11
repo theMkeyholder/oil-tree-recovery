@@ -311,6 +311,3 @@ var saveInterval = setInterval(function () {
 	if (options.autosave)
 		save();
 }, 5000);
-
-
-}
